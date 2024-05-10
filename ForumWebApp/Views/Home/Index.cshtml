@@ -1,0 +1,68 @@
+﻿@using Forum.Application.MainTopics;
+@using Forum.Application.MainUsers
+@model IEnumerable<TopicResponseModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Topics</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FBFBFB; /* Light background */
+        }
+
+        .card {
+            border-radius: 10px; /* Rounded corners for cards */
+        }
+
+        .card-body {
+            padding: 1.5rem; /* Increased padding inside cards */
+        }
+
+        .btn-outline-secondary {
+            border-color: #54B4D3; /* Custom border color */
+            color: #54B4D3; /* Custom text color */
+        }
+
+            .btn-outline-secondary:hover {
+                background-color: #54B4D3; /* Custom background color on hover */
+                color: white; /* Custom text color on hover */
+            }
+    </style>
+</head>
+<body>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <p class="card-text">Title : @item.Title</p>
+                                <p class="card-text">Content : @item.Content</p>
+                                <p class="card-text">Comment Count: @item.CommentCount</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a type="btn -success" asp-controller="Topic" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

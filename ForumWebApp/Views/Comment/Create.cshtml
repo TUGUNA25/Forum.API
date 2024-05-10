@@ -1,0 +1,61 @@
+﻿@using Forum.Application.MainComments
+@model CommentCreateModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Comment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FBFBFB; /* Light background */
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem; /* Space between form elements */
+        }
+
+        .btn-primary {
+            background-color: #54B4D3; /* Info color for primary button */
+            border-color: #54B4D3;
+            border-radius: 20px; /* Rounded corners for buttons */
+        }
+
+            .btn-primary:hover {
+                background-color: #3C97C6; /* Darker shade on hover */
+                border-color: #3C97C6;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 class="card-title text-center mb-4">Create a New Comment</h4>
+                        <form method="post" asp-action="Create" asp-controller="Comment" enctype="multipart/form-data">
+                            <input type="hidden" value="AddressId" id="AddressId" />
+                            <div class="form-group">
+                                <label asp-for="Content">Content</label>
+                                <input asp-for="Content" class="form-control" placeholder="Description">
+                                <span asp-validation-for="Content" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

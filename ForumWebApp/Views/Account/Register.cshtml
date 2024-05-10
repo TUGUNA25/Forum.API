@@ -1,0 +1,97 @@
+﻿@using Forum.Application.MainUsers
+@model UserCreateModel
+
+@{
+    ViewData["Title"] = "Sign up";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FBFBFB; /* Light background */
+        }
+
+        .card {
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Shadow effect */
+        }
+
+        .card-title {
+            color: #332D2D; /* Dark text for title */
+        }
+
+        .btn-primary, .btn-secondary {
+            border-radius: 20px; /* Rounded corners for buttons */
+        }
+
+        .btn-primary {
+            background-color: #54B4D3; /* Info color for primary button */
+            border-color: #54B4D3;
+        }
+
+        .btn-secondary {
+            background-color: #E4A11B; /* Warning color for secondary button */
+            border-color: #E4A11B;
+        }
+
+        .alert-danger {
+            background-color: #FF6B6B; /* Red background for error alert */
+            border-color: #FF6B6B;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 class="card-title text-center mb-4">Sign up for a new account</h4>
+                        @if (TempData["Error"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Sorry!</strong> - @TempData["Error"]
+                            </div>
+                        }
+                        <form asp-action="Register">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="UserName" class="control-label">Username</label>
+                                <input asp-for="UserName" class="form-control" placeholder="Choose a username">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label">Email Address</label>
+                                <input asp-for="Email" class="form-control" placeholder="Enter your email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label">Password</label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Choose a password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+                                <a class="btn btn-secondary btn-block" asp-controller="Home" asp-action="Index">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

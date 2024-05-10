@@ -1,0 +1,88 @@
+﻿@using Forum.Application.MainUsers;
+@model IEnumerable<UserAdminResponseModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FBFBFB; /* Light background */
+        }
+
+        .table {
+            margin-top: 20px;
+            border-color: #332D2D; /* Dark border */
+        }
+
+        .text-danger, .text-success {
+            font-weight: bold;
+        }
+
+        .btn-ban, .btn-unban {
+            margin-right: 5px;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #E4A11B; /* Warning color for odd rows */
+        }
+
+        .table-striped tbody tr:nth-of-type(even) {
+            background-color: #54B4D3; /* Info color for even rows */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4 text-primary">Users</h1> <!-- Primary color for heading -->
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                    <th>Is Banned</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>@user.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>
+                            @if (user.IsBanned)
+                            {
+                                <span class="text-danger">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">No</span>
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="Ban" asp-controller="User" asp-route-id="@user.Id" asp-route-isBanned="@user.IsBanned">
+                                <input type="hidden" name="isBanned" value="@user.IsBanned" />
+                                <button type="submit" class="btn @(user.IsBanned ? "btn-unban" : "btn-ban")">@(user.IsBanned ? "Unban" : "Ban")</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

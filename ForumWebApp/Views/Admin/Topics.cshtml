@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .table {
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .table thead {
+            background-color: #3498db;
+            color: white;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .table tbody tr:hover {
+            background-color: #e7e7e7;
+        }
+        .text-success, .text-danger, .text-primary, .text-warning, .text-secondary {
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .text-success {
+            background-color: #2ecc71;
+        }
+        .text-danger {
+            background-color: #e74c3c;
+        }
+        .text-primary {
+            background-color: #3498db;
+        }
+        .text-warning {
+            background-color: #f1c40f;
+        }
+        .text-secondary {
+            background-color: #95a5a6;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .actions button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Topic</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Comment Count</th>
+                    <th>Created At</th>
+                    <th>User Name</th>
+                    <th>Status</th>
+                    <th>State</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var topic in Model)
+                {
+                    <tr>
+                        <td>@topic.Title</td>
+                        <td>@topic.CommentCount</td>
+                        <td>@topic.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@topic.UserName</td>
+                        <td>
+                            @if (topic.Status == "Active")
+                            {
+                                <span class="text-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">Inactive</span>
+                            }
+                        </td>
+                        <td>
+                            @switch (topic.State)
+                            {
+                                case "Show":
+                                    <span class="text-primary">Show</span>
+                                    break;
+                                case "Hide":
+                                    <span class="text-warning">Hide</span>
+                                    break;
+                                case "Pending":
+                                    <span class="text-secondary">Pending</span>
+                                    break;
+                            }
+                        </td>
+                        <td class="actions">
+                            <form method="post" asp-controller="Topic" asp-action="ChangeState" asp-route-id="@topic.Id">
+                                <select name="state">
+                                    <option value="Show">Show</option>
+                                    <option value="Hide">Hide</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Change State</button>
+                            </form>
+
+                            <form method="put" asp-controller="Topic" asp-action="ChangeStatus" asp-route-id="@topic.Id" asp-route-status="@topic.Status">
+                                <input type="hidden" name="status" value="@(topic.Status == "Active" ? "Inactive" : "Active")" />
+                                <button type="submit" class="btn btn-secondary">@(topic.Status == "Active" ? "Deactivate" : "Activate")</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
